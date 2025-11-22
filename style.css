@@ -9,6 +9,16 @@ body {
   width: 100vw;
 }
 
+.header {
+  display: flex;
+  padding: 8px;
+}
+
+.btn {
+  flex-grow: 1;
+  padding: 8px;
+}
+
 .container {
   display: flex;
   height: 100%;
