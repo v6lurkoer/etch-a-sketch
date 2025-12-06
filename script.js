@@ -3,17 +3,36 @@ const row_column_count_max = 100;
 let grid_exists = 0;
 
 const btn_grid = document.querySelector(".grid");
+const btn_black_color = document.querySelector(".black-color");
+const btn_random_color = document.querySelector(".random-color");
+const btn_opacity = document.querySelector(".opacity");
 const container = document.querySelector(".container");
 const squares = document.querySelectorAll(".square");
 
 btn_grid.addEventListener("click", buttonClickedGrid);
-container.addEventListener("mouseenter", fill, true);
-container.addEventListener("mouseleave", empty, true);
+btn_black_color.addEventListener("click", buttonClickedBlackColor);
+btn_random_color.addEventListener("click", buttonClickedRandomColor);
+btn_opacity.addEventListener("click", buttonClickedOpacity);
 
 function buttonClickedGrid() {
   row_column_count = prompt("How many rows and columns (1 - 100)?");
   if (row_column_count > row_column_count_max) row_column_count = row_column_count_max;
   createGrid();
+}
+
+function buttonClickedBlackColor() {
+  container.addEventListener("mouseenter", fillBlackColor, true);
+  container.addEventListener("mouseleave", empty, true);
+}
+
+function buttonClickedRandomColor() {
+  container.addEventListener("mouseenter", fillRandomColor, true);
+  container.addEventListener("mouseleave", empty, true);
+}
+
+function buttonClickedOpacity() {
+  container.addEventListener("mouseenter", fillOpacity, true);
+  container.addEventListener("mouseleave", empty, true);
 }
 
 function createGrid() {
@@ -37,9 +56,30 @@ function removeGrid() {
   rows.forEach((row) => row.remove());
 }
 
-function fill(e) {
+function fillBlackColor(e) {
   if (e.target.classList.contains("square")) {
     e.target.style.backgroundColor = "black";
+  }
+}
+
+function fillRandomColor(e) {
+  const r = getRandomInt(256);
+  const g = getRandomInt(256);
+  const b = getRandomInt(256);
+
+  if (e.target.classList.contains("square")) {
+    e.target.style.backgroundColor = `rgb(${r} ${g} ${b})`;
+  }
+}
+
+function fillOpacity(e) {
+  const r = 0;
+  const g = 0;
+  const b = 0;
+  let o = 0.1;
+
+  if (e.target.classList.contains("square")) {
+    e.target.style.backgroundColor = `rgb(${r} ${g} ${b} / ${o})`;
   }
 }
 
@@ -49,4 +89,8 @@ function empty(e) {
       e.target.style.backgroundColor = "";
     }, 200);
   }
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
