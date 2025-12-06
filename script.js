@@ -1,19 +1,34 @@
 let row_column_count = 0;
 const row_column_count_max = 100;
 let grid_exists = 0;
+let clicked_btn_black_color = 0;
 
 const btn_grid = document.querySelector(".grid");
+const btn_black_color = document.querySelector(".black-color");
 const container = document.querySelector(".container");
 const squares = document.querySelectorAll(".square");
 
 btn_grid.addEventListener("click", buttonClickedGrid);
-container.addEventListener("mouseenter", fill, true);
-container.addEventListener("mouseleave", empty, true);
+btn_black_color.addEventListener("click", buttonClickedBlackColor);
 
 function buttonClickedGrid() {
   row_column_count = prompt("How many rows and columns (1 - 100)?");
   if (row_column_count > row_column_count_max) row_column_count = row_column_count_max;
   createGrid();
+}
+
+function buttonClickedBlackColor(e) {
+  if (clicked_btn_black_color === 0) {
+    btn_black_color.style.backgroundColor = "green";
+    container.addEventListener("mouseenter", fill, true);
+    container.addEventListener("mouseleave", empty, true);
+    clicked_btn_black_color = 1;
+  } else if (clicked_btn_black_color === 1) {
+    btn_black_color.style.backgroundColor = "";
+    container.removeEventListener("mouseenter", fill, true);
+    container.removeEventListener("mouseleave", empty, true);
+    clicked_btn_black_color = 0;
+  }
 }
 
 function createGrid() {
