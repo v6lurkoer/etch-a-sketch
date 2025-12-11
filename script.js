@@ -23,16 +23,22 @@ function buttonClickedGrid() {
 function buttonClickedBlackColor() {
   container.addEventListener("mouseenter", fillBlackColor, true);
   container.addEventListener("mouseleave", empty, true);
+  container.removeEventListener("mouseenter", fillRandomColor, true);
+  container.removeEventListener("mouseenter", fillOpacity, true);
 }
 
 function buttonClickedRandomColor() {
   container.addEventListener("mouseenter", fillRandomColor, true);
   container.addEventListener("mouseleave", empty, true);
+  container.removeEventListener("mouseenter", fillBlackColor, true);
+  container.removeEventListener("mouseenter", fillOpacity, true);
 }
 
 function buttonClickedOpacity() {
   container.addEventListener("mouseenter", fillOpacity, true);
   container.addEventListener("mouseleave", empty, true);
+  container.removeEventListener("mouseenter", fillBlackColor, true);
+  container.removeEventListener("mouseenter", fillRandomColor, true);
 }
 
 function createGrid() {
