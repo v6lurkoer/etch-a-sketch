@@ -2,6 +2,8 @@ let row_column_count = 0;
 const row_column_count_max = 100;
 let grid_exists = 0;
 let clicked_btn_black_color = 0;
+let clicked_btn_random_color = 0;
+let clicked_btn_opacity = 0;
 
 const btn_grid = document.querySelector(".grid");
 const btn_black_color = document.querySelector(".black-color");
@@ -21,39 +23,58 @@ function buttonClickedGrid() {
   createGrid();
 }
 
-function buttonClickedBlackColor() {
-  container.addEventListener("mouseenter", fillBlackColor, true);
-  container.addEventListener("mouseleave", empty, true);
-  container.removeEventListener("mouseenter", fillRandomColor, true);
-  container.removeEventListener("mouseenter", fillOpacity, true);
+function buttonClickedBlackColor(e) {
+  if (clicked_btn_black_color === 0) {
+    if (clicked_btn_random_color === 0 && clicked_btn_opacity === 0) {
+      container.addEventListener("mouseenter", fillBlackColor, true);
+      container.addEventListener("mouseleave", empty, true);
+      container.removeEventListener("mouseenter", fillRandomColor, true);
+      container.removeEventListener("mouseenter", fillOpacity, true);
+      btn_black_color.style.backgroundColor = "green";
+      clicked_btn_black_color = 1;
+    }
+  } else if (clicked_btn_black_color === 1) {
+    container.removeEventListener("mouseenter", fillBlackColor, true);
+    container.removeEventListener("mouseleave", empty, true);
+    btn_black_color.style.backgroundColor = "";
+    clicked_btn_black_color = 0;
+  }
 }
 
 function buttonClickedRandomColor() {
-  container.addEventListener("mouseenter", fillRandomColor, true);
-  container.addEventListener("mouseleave", empty, true);
-  container.removeEventListener("mouseenter", fillBlackColor, true);
-  container.removeEventListener("mouseenter", fillOpacity, true);
+  if (clicked_btn_random_color === 0) {
+    if (clicked_btn_black_color === 0 && clicked_btn_opacity === 0) {
+      container.addEventListener("mouseenter", fillRandomColor, true);
+      container.addEventListener("mouseleave", empty, true);
+      container.removeEventListener("mouseenter", fillBlackColor, true);
+      container.removeEventListener("mouseenter", fillOpacity, true);
+      btn_random_color.style.backgroundColor = "green";
+      clicked_btn_random_color = 1;
+    }
+  } else if (clicked_btn_random_color === 1) {
+    container.removeEventListener("mouseenter", fillRandomColor, true);
+    container.removeEventListener("mouseenter", empty, true);
+    btn_random_color.style.backgroundColor = "";
+    clicked_btn_random_color = 0;
+  }
 }
 
 function buttonClickedOpacity() {
-  container.addEventListener("mouseenter", fillOpacity, true);
-  container.addEventListener("mouseleave", empty, true);
-  container.removeEventListener("mouseenter", fillBlackColor, true);
-  container.removeEventListener("mouseenter", fillRandomColor, true);
-
-function buttonClickedBlackColor(e) {
-  if (clicked_btn_black_color === 0) {
-    btn_black_color.style.backgroundColor = "green";
-    container.addEventListener("mouseenter", fill, true);
-    container.addEventListener("mouseleave", empty, true);
-    clicked_btn_black_color = 1;
-  } else if (clicked_btn_black_color === 1) {
-    btn_black_color.style.backgroundColor = "";
-    container.removeEventListener("mouseenter", fill, true);
-    container.removeEventListener("mouseleave", empty, true);
-    clicked_btn_black_color = 0;
-  }
-
+    if (clicked_btn_opacity === 0) {
+      if (clicked_btn_black_color === 0 && clicked_btn_random_color === 0) {
+        container.addEventListener("mouseenter", fillOpacity, true);
+        container.addEventListener("mouseleave", empty, true);
+        container.removeEventListener("mouseenter", fillBlackColor, true);
+        container.removeEventListener("mouseenter", fillRandomColor, true);
+        btn_opacity.style.backgroundColor = "green";
+        clicked_btn_opacity = 1;
+      }
+    } else if (clicked_btn_opacity === 1) {
+      container.removeEventListener("mouseenter", fillOpacity, true);
+      container.removeEventListener("mouseenter", empty, true);
+      btn_opacity.style.backgroundColor = "";
+      clicked_btn_opacity = 0;
+    }
 }
 
 function createGrid() {
@@ -100,7 +121,7 @@ function fillOpacity(e) {
   let o = 0.1;
 
   if (e.target.classList.contains("square")) {
-    e.target.style.backgroundColor = `rgb(${r} ${g} ${b} / ${o})`;
+    e.target.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${o})`;
   }
 }
 
