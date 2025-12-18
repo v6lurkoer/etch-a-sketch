@@ -1,9 +1,12 @@
+const max_row_column_count = 100;
+const max_opacity_value = 1;
+
 let row_column_count = 0;
-const row_column_count_max = 100;
 let grid_exists = 0;
 let clicked_btn_black_color = 0;
 let clicked_btn_random_color = 0;
 let clicked_btn_opacity = 0;
+let opacity = 0;
 
 const btn_grid = document.querySelector(".grid");
 const btn_black_color = document.querySelector(".black-color");
@@ -19,7 +22,7 @@ btn_opacity.addEventListener("click", buttonClickedOpacity);
 
 function buttonClickedGrid() {
   row_column_count = prompt("How many rows and columns (1 - 100)?");
-  if (row_column_count > row_column_count_max) row_column_count = row_column_count_max;
+  if (row_column_count > max_row_column_count) row_column_count = max_row_column_count;
   createGrid();
 }
 
@@ -100,7 +103,7 @@ function removeGrid() {
 
 function fillBlackColor(e) {
   if (e.target.classList.contains("square")) {
-    e.target.style.backgroundColor = "black";
+    e.target.style.backgroundColor = "rgb(0, 0, 0)";
   }
 }
 
@@ -110,19 +113,19 @@ function fillRandomColor(e) {
   const b = getRandomInt(256);
 
   if (e.target.classList.contains("square")) {
-    e.target.style.backgroundColor = `rgb(${r} ${g} ${b})`;
+    e.target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
   }
 }
 
 function fillOpacity(e) {
-  const r = 0;
-  const g = 0;
-  const b = 0;
-  let o = 0.1;
+  if (opacity > max_opacity_value) opacity = 0.1;
 
   if (e.target.classList.contains("square")) {
-    e.target.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${o})`;
+    e.target.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
   }
+
+  opacity += 0.1;
+  console.log(opacity);
 }
 
 function empty(e) {
