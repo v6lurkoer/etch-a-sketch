@@ -1,5 +1,5 @@
 const max_row_column_count = 100;
-const max_opacity_value = 1;
+const max_opacity_value = 10;
 
 let row_column_count = 0;
 let grid_exists = 0;
@@ -13,7 +13,6 @@ const btn_black_color = document.querySelector(".black-color");
 const btn_random_color = document.querySelector(".random-color");
 const btn_opacity = document.querySelector(".opacity");
 const container = document.querySelector(".container");
-const squares = document.querySelectorAll(".square");
 
 btn_grid.addEventListener("click", buttonClickedGrid);
 btn_black_color.addEventListener("click", buttonClickedBlackColor);
@@ -22,59 +21,76 @@ btn_opacity.addEventListener("click", buttonClickedOpacity);
 
 function buttonClickedGrid() {
   row_column_count = prompt("How many rows and columns (1 - 100)?");
-  if (row_column_count > max_row_column_count) row_column_count = max_row_column_count;
+  if (row_column_count > max_row_column_count) {
+    row_column_count = max_row_column_count
+  };
   createGrid();
 }
 
 function buttonClickedBlackColor(e) {
+  const squares = document.querySelectorAll(".square");
   if (clicked_btn_black_color === 0) {
     if (clicked_btn_random_color === 0 && clicked_btn_opacity === 0) {
-      container.addEventListener("mouseenter", fillBlackColor, true);
-      container.addEventListener("mouseleave", empty, true);
-      container.removeEventListener("mouseenter", fillRandomColor, true);
-      container.removeEventListener("mouseenter", fillOpacity, true);
+      squares.forEach((square) => {
+        square.addEventListener("mouseenter", fillBlackColor, true);
+        square.addEventListener("mouseleave", empty, true);
+        square.removeEventListener("mouseenter", fillRandomColor, true);
+        square.removeEventListener("mouseenter", fillOpacity, true);
+      });
       btn_black_color.style.backgroundColor = "green";
       clicked_btn_black_color = 1;
     }
   } else if (clicked_btn_black_color === 1) {
-    container.removeEventListener("mouseenter", fillBlackColor, true);
-    container.removeEventListener("mouseleave", empty, true);
+    squares.forEach((square) => {
+      square.removeEventListener("mouseenter", fillBlackColor, true);
+      square.removeEventListener("mouseleave", empty, true);
+    });
     btn_black_color.style.backgroundColor = "";
     clicked_btn_black_color = 0;
   }
 }
 
 function buttonClickedRandomColor() {
+  const squares = document.querySelectorAll(".square");
   if (clicked_btn_random_color === 0) {
     if (clicked_btn_black_color === 0 && clicked_btn_opacity === 0) {
-      container.addEventListener("mouseenter", fillRandomColor, true);
-      container.addEventListener("mouseleave", empty, true);
-      container.removeEventListener("mouseenter", fillBlackColor, true);
-      container.removeEventListener("mouseenter", fillOpacity, true);
+      squares.forEach((square) => {
+        square.addEventListener("mouseenter", fillRandomColor, true);
+        square.addEventListener("mouseleave", empty, true);
+        square.removeEventListener("mouseenter", fillBlackColor, true);
+        square.removeEventListener("mouseenter", fillOpacity, true);
+      });
       btn_random_color.style.backgroundColor = "green";
       clicked_btn_random_color = 1;
     }
   } else if (clicked_btn_random_color === 1) {
-    container.removeEventListener("mouseenter", fillRandomColor, true);
-    container.removeEventListener("mouseenter", empty, true);
+    squares.forEach((square) => {
+      square.removeEventListener("mouseenter", fillRandomColor, true);
+      square.removeEventListener("mouseenter", empty, true);
+    });
     btn_random_color.style.backgroundColor = "";
     clicked_btn_random_color = 0;
   }
 }
 
 function buttonClickedOpacity() {
+  const squares = document.querySelectorAll(".square");
     if (clicked_btn_opacity === 0) {
       if (clicked_btn_black_color === 0 && clicked_btn_random_color === 0) {
-        container.addEventListener("mouseenter", fillOpacity, true);
-        container.addEventListener("mouseleave", empty, true);
-        container.removeEventListener("mouseenter", fillBlackColor, true);
-        container.removeEventListener("mouseenter", fillRandomColor, true);
+        squares.forEach((square) => {
+          square.addEventListener("mouseenter", fillOpacity, true);
+          square.addEventListener("mouseleave", empty, true);
+          square.removeEventListener("mouseenter", fillBlackColor, true);
+          square.removeEventListener("mouseenter", fillRandomColor, true);
+        });
         btn_opacity.style.backgroundColor = "green";
         clicked_btn_opacity = 1;
       }
     } else if (clicked_btn_opacity === 1) {
-      container.removeEventListener("mouseenter", fillOpacity, true);
-      container.removeEventListener("mouseenter", empty, true);
+      squares.forEach((square) => {
+        square.removeEventListener("mouseenter", fillOpacity, true);
+        square.removeEventListener("mouseenter", empty, true);
+      });
       btn_opacity.style.backgroundColor = "";
       clicked_btn_opacity = 0;
     }
@@ -118,13 +134,12 @@ function fillRandomColor(e) {
 }
 
 function fillOpacity(e) {
-  if (opacity > max_opacity_value) opacity = 0.1;
-
+  if (opacity > max_opacity_value) opacity = 1;
   if (e.target.classList.contains("square")) {
-    e.target.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
+    e.target.style.backgroundColor = `rgba(0, 0, 0, ${opacity / 10})`;
   }
 
-  opacity += 0.1;
+  opacity += 1;
   console.log(opacity);
 }
 
