@@ -140,7 +140,6 @@ function fillOpacity(e) {
   }
 
   opacity += 1;
-  console.log(opacity);
 }
 
 function empty(e) {
